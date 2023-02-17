@@ -1,0 +1,1 @@
+UPDATE Superhero SET SuperheroName = 'Mattias Jr' WHERE SuperheroName = 'Mattias Smedman'
