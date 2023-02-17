@@ -9,7 +9,13 @@ var customerRepositories = new CustomerRepositor { ConnectionString = GetConnect
 
 var allCustomers = customerRepositories.GetAll();
 var oneCustomer = customerRepositories.GetById(1);
-foreach(var customer in allCustomers)
+//foreach(var customer in allCustomers)
+//{
+//    Console.WriteLine($"{customer.customerId} : {customer.firstName} : {customer.lastName} : {customer.country} : {customer.postalCode} : {customer.phoneNumber} : {customer.email}");
+//}
+
+var pageCustomers = customerRepositories.GetPage(10, 5);
+foreach(var customer in pageCustomers)
 {
     Console.WriteLine($"{customer.customerId} : {customer.firstName} : {customer.lastName} : {customer.country} : {customer.postalCode} : {customer.phoneNumber} : {customer.email}");
 }
