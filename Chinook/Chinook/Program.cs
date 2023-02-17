@@ -4,21 +4,24 @@ using Chinook.Models;
 using Microsoft.Data.SqlClient;
 
 Console.WriteLine("Hello, World!");
-
+var customer1 = new Customer(1, "Pelle", "berg", "Sweden", "dsa", "0000", "gmail");
 var customerRepositories = new CustomerRepositor { ConnectionString = GetConnectionString() };
 
+customerRepositories.Add(customer1);
 var allCustomers = customerRepositories.GetAll();
 var oneCustomer = customerRepositories.GetById(1);
-//foreach(var customer in allCustomers)
-//{
-//    Console.WriteLine($"{customer.customerId} : {customer.firstName} : {customer.lastName} : {customer.country} : {customer.postalCode} : {customer.phoneNumber} : {customer.email}");
-//}
+foreach (var customer in allCustomers)
+{
+    Console.WriteLine($"{customer.customerId} : {customer.firstName} : {customer.lastName} : {customer.country} : {customer.postalCode} : {customer.phoneNumber} : {customer.email}");
+}
 
 var pageCustomers = customerRepositories.GetPage(10, 5);
 foreach(var customer in pageCustomers)
 {
     Console.WriteLine($"{customer.customerId} : {customer.firstName} : {customer.lastName} : {customer.country} : {customer.postalCode} : {customer.phoneNumber} : {customer.email}");
 }
+
+
 
 Console.WriteLine(oneCustomer.firstName);
 

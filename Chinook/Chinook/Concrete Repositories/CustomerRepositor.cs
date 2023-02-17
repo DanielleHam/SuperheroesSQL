@@ -1,6 +1,7 @@
 ﻿using Chinook.Models;
 using Chinook.Repositories;
 using Microsoft.Data.SqlClient;
+using System.Collections.Generic;
 
 namespace Chinook.Concrete_Repositories
 {
@@ -86,6 +87,22 @@ namespace Chinook.Concrete_Repositories
                     (!reader.IsDBNull(6) ? reader.GetString(6) : "No email")
                     );
             }
+        }
+        public void Add(Customer customer)
+        {
+            using var connection = new SqlConnection(ConnectionString);
+            connection.Open();
+            var sql = "INSERT INTO Customer(FirstName, LastName, Country, PostalCode, Phone, Email) VALUES (@FirstName, @LastName, @Country, @PostalCode, @Phone, @Email)";
+            using var command = new SqlCommand(sql, connection);
+            command.Parameters.AddWithValue("@FirstName", customer.firstName);
+            command.Parameters.AddWithValue("@LastName", customer.lastName);
+            command.Parameters.AddWithValue("@Country", customer.country);
+            command.Parameters.AddWithValue("@PostalCode", customer.postalCode);
+            command.Parameters.AddWithValue("@Phone", customer.phoneNumber);
+            command.Parameters.AddWithValue("@Email", customer.email);
+
+            command.ExecuteNonQuery();
+
         }
     }
 }

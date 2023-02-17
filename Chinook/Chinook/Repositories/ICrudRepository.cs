@@ -12,5 +12,7 @@ namespace Chinook.Repositories
         T GetById(int id);
         IEnumerable<T> GetByName();
         IEnumerable<T> GetPage(int limit, int offset);
+
+        void Add(T entity);
     }
 }
