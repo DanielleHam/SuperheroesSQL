@@ -1,11 +1,6 @@
 ﻿using Chinook.Models;
 using Chinook.Repositories;
 using Microsoft.Data.SqlClient;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Chinook.Concrete_Repositories
 {
@@ -13,7 +8,7 @@ namespace Chinook.Concrete_Repositories
     {
         public string ConnectionString { get; set; } = string.Empty;
 
-        public Customer Get(int id)
+        public Customer GetById(int id)
         {
             using var connection = new SqlConnection(ConnectionString);
             connection.Open();

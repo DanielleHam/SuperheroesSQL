@@ -9,6 +9,6 @@ namespace Chinook.Repositories
     public interface ICrudRepository<T>
     {
         IEnumerable<T> GetAll();
-        T Get(int id);
+        T GetById(int id);
     }
 }
