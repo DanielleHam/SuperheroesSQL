@@ -10,9 +10,11 @@ namespace Chinook.Repositories
     {
         IEnumerable<T> GetAll();
         T GetById(int id);
-        IEnumerable<T> GetByName();
+        IEnumerable<T> GetByName(string name);
         IEnumerable<T> GetPage(int limit, int offset);
 
         void Add(T entity);
+
+        void Update( int id, T entity);
     }
 }
