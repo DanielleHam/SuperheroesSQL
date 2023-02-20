@@ -2,6 +2,7 @@
 using Chinook.Repositories;
 using Microsoft.Data.SqlClient;
 using System.Collections.Generic;
+using System.Reflection.PortableExecutable;
 
 namespace Chinook.Concrete_Repositories
 {
@@ -43,7 +44,7 @@ namespace Chinook.Concrete_Repositories
             using SqlDataReader reader = command.ExecuteReader();
 
             var result = new Customer();
-            while(reader.Read())
+            while (reader.Read())
             {
                 result = new Customer(
                     reader.GetInt32(0),
@@ -57,7 +58,7 @@ namespace Chinook.Concrete_Repositories
             }
 
             return result;
-             
+
         }
 
         public IEnumerable<Customer> GetByName(string name)
@@ -140,6 +141,23 @@ namespace Chinook.Concrete_Repositories
             command.Parameters.AddWithValue("@Id", id);
 
             command.ExecuteNonQuery();
+        }
+
+        public IEnumerable<CustomerCountry> SortByCountry()
+        {
+            using var connection = new SqlConnection(ConnectionString);
+            connection.Open();
+            var sql = "SELECT Country,COUNT (CustomerId) FROM Customer GROUP BY Country ORDER BY COUNT (CustomerId) DESC";
+            using var command = new SqlCommand(sql, connection);
+            var reader = command.ExecuteReader();
+            while (reader.Read())
+            {
+                yield return new CustomerCountry(
+                reader.GetString(0),
+                reader.GetInt32(1)
+                
+                    );
+            }
         }
     }
 }

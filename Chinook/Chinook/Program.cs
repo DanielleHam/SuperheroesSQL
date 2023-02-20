@@ -34,6 +34,12 @@ foreach (var customer in findByNameCustomer)
     Console.WriteLine($"{customer.customerId} : {customer.firstName} : {customer.lastName} : {customer.country} : {customer.postalCode} : {customer.phoneNumber} : {customer.email}");
 }
 
+var cc = customerRepositories.SortByCountry();
+foreach (var customer in cc)
+{
+    Console.WriteLine($"{customer.country}: {customer.count}");
+}
+
 static string GetConnectionString()
 {
     var builder = new SqlConnectionStringBuilder
