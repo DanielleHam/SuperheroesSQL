@@ -13,11 +13,16 @@ The Chinook project contains a C# project that communicates with a database for 
 ## Made By
 
 Danielle Hamrin
+
 Keman Nguyen
+
 Mattias Smedman
 
 ## Made Using
 
 [SQL Server Management Studio](https://learn.microsoft.com/en-us/sql/ssms/download-sql-server-management-studio-ssms?view=sql-server-ver16)
+
 [C#](https://learn.microsoft.com/en-us/dotnet/csharp/)
+
 [Visual Studio 2022](https://visualstudio.microsoft.com/vs/)
+
