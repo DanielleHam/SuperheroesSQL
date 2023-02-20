@@ -19,6 +19,7 @@ namespace Chinook.Repositories
         /// </summary>
         /// <param name="id">ID of entity</param>
         /// <returns>Fetched entity</returns>
+        /// <exception cref="Exception">Thrown when <paramref name="id"> Is not found </exception>
         T GetById(int id);
         /// <summary>
         /// Gets all entities with names that are similar to input
