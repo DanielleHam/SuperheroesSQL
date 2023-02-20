@@ -159,5 +159,23 @@ namespace Chinook.Concrete_Repositories
                     );
             }
         }
+
+        public IEnumerable<CustomerSpender> SortBySpendings()
+        {
+            using var connection = new SqlConnection(ConnectionString);
+            connection.Open();
+            var sql = "SELECT c.CustomerId, c.FirstName, c.LastName, SUM(i.Total) FROM Invoice AS i INNER JOIN Customer AS c ON  i.CustomerId = c.CustomerId GROUP BY c.FirstName, c.LastName,  c.CustomerId ORDER BY SUM(i.Total) DESC";
+            using var command = new SqlCommand(sql, connection);
+            var reader = command.ExecuteReader();
+            while (reader.Read())
+            {
+                yield return new CustomerSpender(
+                reader.GetString(1),
+                reader.GetString(2),
+                reader.GetDecimal(3)
+
+                    );
+            }
+        }
     }
 }

@@ -11,5 +11,5 @@ namespace Chinook.Models
     /// </summary>
     /// <param name="customerId">Customer Id</param>
     /// <param name="total">Money spent on invoice</param>
-    public readonly record struct CustomerSpender(int customerId, int total);
+    public readonly record struct CustomerSpender(string customerFirstName, string customerLastName, decimal total);
 }
