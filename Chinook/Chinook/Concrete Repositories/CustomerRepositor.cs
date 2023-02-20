@@ -10,7 +10,6 @@ namespace Chinook.Concrete_Repositories
     {
         public string ConnectionString { get; set; } = string.Empty;
 
-
         public IEnumerable<Customer> GetAll()
         {
             using var connection = new SqlConnection(ConnectionString);
@@ -115,35 +114,40 @@ namespace Chinook.Concrete_Repositories
             connection.Open();
             var sql = "INSERT INTO Customer(FirstName, LastName, Country, PostalCode, Phone, Email) VALUES (@FirstName, @LastName, @Country, @PostalCode, @Phone, @Email)";
             using var command = new SqlCommand(sql, connection);
-            command.Parameters.AddWithValue("@FirstName", customer.firstName);
-            command.Parameters.AddWithValue("@LastName", customer.lastName);
-            command.Parameters.AddWithValue("@Country", customer.country);
-            command.Parameters.AddWithValue("@PostalCode", customer.postalCode);
-            command.Parameters.AddWithValue("@Phone", customer.phoneNumber);
-            command.Parameters.AddWithValue("@Email", customer.email);
-
+            command.Parameters.AddWithValue("@FirstName", customer.FirstName);
+            command.Parameters.AddWithValue("@LastName", customer.LastName);
+            command.Parameters.AddWithValue("@Country", customer.Country);
+            command.Parameters.AddWithValue("@PostalCode", customer.PostalCode);
+            command.Parameters.AddWithValue("@Phone", customer.PhoneNumber);
+            command.Parameters.AddWithValue("@Email", customer.Email);
             command.ExecuteNonQuery();
-
         }
 
         public void Update(int id, Customer updateCostumer)
         {
             using var connection = new SqlConnection(ConnectionString);
             connection.Open();
-            var sql = "UPDATE Customer SET FirstName = @FirstName, LastName = @LastName, Country = @Country, PostalCode = @PostalCode, Phone = @Phone, Email = @Email WHERE CustomerId = @Id";
+            var sql = "UPDATE Customer " +
+                "SET FirstName = @FirstName, " +
+                "LastName = @LastName, " +
+                "Country = @Country, " +
+                "PostalCode = @PostalCode, " +
+                "Phone = @Phone, " +
+                "Email = @Email " +
+                "WHERE CustomerId = @Id";
             using var command = new SqlCommand(sql, connection);
-            command.Parameters.AddWithValue("@FirstName", updateCostumer.firstName);
-            command.Parameters.AddWithValue("@LastName", updateCostumer.lastName);
-            command.Parameters.AddWithValue("@Country", updateCostumer.country);
-            command.Parameters.AddWithValue("@PostalCode", updateCostumer.postalCode);
-            command.Parameters.AddWithValue("@Phone", updateCostumer.phoneNumber);
-            command.Parameters.AddWithValue("@Email", updateCostumer.email);
+            command.Parameters.AddWithValue("@FirstName", updateCostumer.FirstName);
+            command.Parameters.AddWithValue("@LastName", updateCostumer.LastName);
+            command.Parameters.AddWithValue("@Country", updateCostumer.Country);
+            command.Parameters.AddWithValue("@PostalCode", updateCostumer.PostalCode);
+            command.Parameters.AddWithValue("@Phone", updateCostumer.PhoneNumber);
+            command.Parameters.AddWithValue("@Email", updateCostumer.Email);
             command.Parameters.AddWithValue("@Id", id);
 
             command.ExecuteNonQuery();
         }
 
-        public IEnumerable<CustomerCountry> SortByCountry()
+        public IEnumerable<CustomerCountry> SortCountriesBasedOnAmountOfCustomers()
         {
             using var connection = new SqlConnection(ConnectionString);
             connection.Open();
@@ -155,8 +159,7 @@ namespace Chinook.Concrete_Repositories
                 yield return new CustomerCountry(
                 reader.GetString(0),
                 reader.GetInt32(1)
-                
-                    );
+                );
             }
         }
 
@@ -178,11 +181,11 @@ namespace Chinook.Concrete_Repositories
             }
         }
 
-        public IEnumerable<CustomerGenre> GetFavoriteGenre(int customerId)
+        public IEnumerable<CustomerGenre> GetCustomerFavoriteGenres(int customerId)
         {
             using var connection = new SqlConnection(ConnectionString);
             connection.Open();
-            var sql = "SELECT TOP 1 WITH TIES c.FirstName, c.LastName, g.Name, COUNT(*) " +
+            var sql = "SELECT TOP 1 WITH TIES c.FirstName, c.LastName, g.Name " +
                "FROM Customer AS c " +
                "INNER JOIN Invoice as i ON i.CustomerId = c.CustomerId " +
                "INNER JOIN InvoiceLine as il ON il.InvoiceId = i.InvoiceId " +
@@ -190,7 +193,7 @@ namespace Chinook.Concrete_Repositories
                "INNER JOIN Genre as g ON g.GenreId = t.GenreId " +
                "WHERE c.CustomerId = @CustomerId " +
                "GROUP BY c.FirstName, c.LastName, g.Name " +
-               "ORDER BY 4 DESC";
+               "ORDER BY COUNT(*) DESC";
             using var command = new SqlCommand(sql, connection);
             command.Parameters.AddWithValue("@CustomerId", customerId);
             var reader = command.ExecuteReader();
@@ -199,8 +202,7 @@ namespace Chinook.Concrete_Repositories
                 yield return new CustomerGenre(
                 reader.GetString(0),
                 reader.GetString(1),
-                reader.GetString(2),
-                reader.GetInt32(3)
+                reader.GetString(2)
                 );
             }
         }

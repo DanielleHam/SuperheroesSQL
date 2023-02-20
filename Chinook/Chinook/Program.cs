@@ -8,7 +8,7 @@ var customer1 = new Customer(1, "Pelle", "berg", "Sweden", "dsa", "0000", "gmail
 
 var customerRepositories = new CustomerRepositor { ConnectionString = GetConnectionString() };
 var oldCustomer = customerRepositories.GetById(60);
-var updatedCostomer = new Customer(oldCustomer.customerId, oldCustomer.firstName, oldCustomer.lastName, oldCustomer.country, oldCustomer.postalCode, "1234789781", oldCustomer.email);
+var updatedCostomer = new Customer(oldCustomer.CustomerId, oldCustomer.FirstName, oldCustomer.LastName, oldCustomer.Country, oldCustomer.PostalCode, "1234789781", oldCustomer.Email);
 //customerRepositories.Add(customer1);
 customerRepositories.Update(60, updatedCostomer);
 var allCustomers = customerRepositories.GetAll();
@@ -25,19 +25,18 @@ var oneCustomer = customerRepositories.GetById(60);
 //}
 
 
-
-Console.WriteLine(oneCustomer.phoneNumber);
+Console.WriteLine(oneCustomer.PhoneNumber);
 
 var findByNameCustomer = customerRepositories.GetByName("berg");
 foreach (var customer in findByNameCustomer)
 {
-    Console.WriteLine($"{customer.customerId} : {customer.firstName} : {customer.lastName} : {customer.country} : {customer.postalCode} : {customer.phoneNumber} : {customer.email}");
+    Console.WriteLine($"{customer.CustomerId} : {customer.FirstName} : {customer.LastName} : {customer.Country} : {customer.PostalCode} : {customer.PhoneNumber} : {customer.Email}");
 }
 
-var cc = customerRepositories.GetFavoriteGenre(12);
+var cc = customerRepositories.GetCustomerFavoriteGenres(12);
 foreach (var customer in cc)
 {
-    Console.WriteLine($"{customer.customerFirstName} {customer.customerLastName}: ${customer.genre} : {customer.total}");
+    Console.WriteLine($"{customer.CustomerFirstName} {customer.CustomerLastName}: {customer.Genre}");
 }
 
 static string GetConnectionString()

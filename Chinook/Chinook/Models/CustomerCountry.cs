@@ -9,7 +9,7 @@ namespace Chinook.Models
     /// <summary>
     /// Creates an object that contains the country and how many customers are from there. 
     /// </summary>
-    /// <param name="country">Country</param>
-    /// <param name="count">How many users there are from the country</param>
-    public readonly record struct CustomerCountry(string country, int count);
+    /// <param name="Country">Country</param>
+    /// <param name="Count">How many users there are from the country</param>
+    public readonly record struct CustomerCountry(string Country, int Count);
 }
