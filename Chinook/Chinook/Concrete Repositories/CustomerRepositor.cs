@@ -43,7 +43,8 @@ namespace Chinook.Concrete_Repositories
             using SqlDataReader reader = command.ExecuteReader();
 
             var result = new Customer();
-            while (reader.Read())
+            
+            if (reader.Read())
             {
                 result = new Customer(
                     reader.GetInt32(0),
@@ -54,6 +55,9 @@ namespace Chinook.Concrete_Repositories
                     (!reader.IsDBNull(5) ? reader.GetString(5) : "No phone number"),
                     (!reader.IsDBNull(6) ? reader.GetString(6) : "No email")
                     );
+            } else
+            {
+                throw new Exception("that id does not exist");
             }
 
             return result;
