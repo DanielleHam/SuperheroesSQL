@@ -177,5 +177,32 @@ namespace Chinook.Concrete_Repositories
                     );
             }
         }
+
+        public IEnumerable<CustomerGenre> GetFavoriteGenre(int customerId)
+        {
+            using var connection = new SqlConnection(ConnectionString);
+            connection.Open();
+            var sql = "SELECT TOP 1 WITH TIES c.FirstName, c.LastName, g.Name, COUNT(*) " +
+               "FROM Customer AS c " +
+               "INNER JOIN Invoice as i ON i.CustomerId = c.CustomerId " +
+               "INNER JOIN InvoiceLine as il ON il.InvoiceId = i.InvoiceId " +
+               "INNER JOIN Track as t ON t.TrackId = il.TrackId " +
+               "INNER JOIN Genre as g ON g.GenreId = t.GenreId " +
+               "WHERE c.CustomerId = @CustomerId " +
+               "GROUP BY c.FirstName, c.LastName, g.Name " +
+               "ORDER BY 4 DESC";
+            using var command = new SqlCommand(sql, connection);
+            command.Parameters.AddWithValue("@CustomerId", customerId);
+            var reader = command.ExecuteReader();
+            while (reader.Read())
+            {
+                yield return new CustomerGenre(
+                reader.GetString(0),
+                reader.GetString(1),
+                reader.GetString(2),
+                reader.GetInt32(3)
+                );
+            }
+        }
     }
 }

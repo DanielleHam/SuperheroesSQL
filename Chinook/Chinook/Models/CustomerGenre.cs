@@ -11,5 +11,5 @@ namespace Chinook.Models
     /// </summary>
     /// <param name="customerId">Customer ID</param>
     /// <param name="genre">Customer's most common genre</param>
-    public readonly record struct CustomerGenre(int customerId, string genre);
+    public readonly record struct CustomerGenre(string customerFirstName, string customerLastName, string genre, int total);
 }

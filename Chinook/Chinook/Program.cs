@@ -34,10 +34,10 @@ foreach (var customer in findByNameCustomer)
     Console.WriteLine($"{customer.customerId} : {customer.firstName} : {customer.lastName} : {customer.country} : {customer.postalCode} : {customer.phoneNumber} : {customer.email}");
 }
 
-var cc = customerRepositories.SortBySpendings();
+var cc = customerRepositories.GetFavoriteGenre(12);
 foreach (var customer in cc)
 {
-    Console.WriteLine($"{customer.customerFirstName} {customer.customerLastName}: ${customer.total}");
+    Console.WriteLine($"{customer.customerFirstName} {customer.customerLastName}: ${customer.genre} : {customer.total}");
 }
 
 static string GetConnectionString()
