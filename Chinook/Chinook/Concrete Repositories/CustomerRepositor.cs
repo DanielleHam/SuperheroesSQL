@@ -93,7 +93,7 @@ namespace Chinook.Concrete_Repositories
         {
             using var connection = new SqlConnection(ConnectionString);
             connection.Open();
-            var sql = "SELECT TOP (@limit) CustomerId, FirstName, LastName, Country, PostalCode, Phone, Email FROM Customer WHERE CustomerId > @offset";
+            var sql = "SELECT CustomerId, FirstName, LastName, Country, PostalCode, Phone, Email FROM Customer ORDER BY (SELECT NULL) OFFSET @offset ROWS FETCH NEXT @limit ROWS ONLY";
             using var command = new SqlCommand(sql, connection);
             command.Parameters.AddWithValue("@limit", limit);
             command.Parameters.AddWithValue("@offset", offset);

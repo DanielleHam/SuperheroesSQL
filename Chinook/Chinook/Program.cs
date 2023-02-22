@@ -12,17 +12,17 @@ var updatedCostomer = new Customer(oldCustomer.CustomerId, oldCustomer.FirstName
 //customerRepositories.Add(customer1);
 customerRepositories.Update(60, updatedCostomer);
 var allCustomers = customerRepositories.GetAll();
-var oneCustomer = customerRepositories.GetById(70);
+var oneCustomer = customerRepositories.GetById(50);
 //foreach (var customer in allCustomers)
 //{
 //    Console.WriteLine($"{customer.customerId} : {customer.firstName} : {customer.lastName} : {customer.country} : {customer.postalCode} : {customer.phoneNumber} : {customer.email}");
 //}
 
-//var pageCustomers = customerRepositories.GetPage(10, 5);
-//foreach(var customer in pageCustomers)
-//{
-//    Console.WriteLine($"{customer.customerId} : {customer.firstName} : {customer.lastName} : {customer.country} : {customer.postalCode} : {customer.phoneNumber} : {customer.email}");
-//}
+var pageCustomers = customerRepositories.GetPage(10, 5);
+foreach (var customer in pageCustomers)
+{
+    Console.WriteLine($"{customer.CustomerId} : {customer.FirstName} : {customer.LastName} : {customer.Country} : {customer.PostalCode} : {customer.PhoneNumber} : {customer.Email}");
+}
 
 
 Console.WriteLine("hej " + oneCustomer.FirstName);
